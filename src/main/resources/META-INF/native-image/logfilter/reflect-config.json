@@ -1,0 +1,25 @@
+[
+  {
+    "name" : "logfilter.CliArguments",
+    "queryAllDeclaredConstructors" : true,
+    "queryAllPublicConstructors" : true,
+    "queryAllDeclaredMethods" : true,
+    "queryAllPublicMethods" : true,
+    "allDeclaredClasses" : true,
+    "allPublicClasses" : true,
+    "allPublicFields" :  true,
+    "allDeclaredFields" : true
+  },
+  {
+    "name" : "logfilter.Rule",
+    "queryAllDeclaredConstructors" : true,
+    "queryAllPublicConstructors" : true,
+    "queryAllDeclaredMethods" : true,
+    "queryAllPublicMethods" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredClasses" : true,
+    "allPublicClasses" : true,
+    "allPublicFields" :  true,
+    "allDeclaredFields" : true
+  }
+]
