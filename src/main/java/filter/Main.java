@@ -17,7 +17,10 @@ public enum Main {;
         final var arguments = newCliParser(CliArguments::new)
                 .onHelpPrintHelpAndExit().onErrorPrintHelpAndExit().parseSuppressErrors(args);
 
-        streamInput(loadRules(arguments.rulesFile));
+        final var rule = loadRules(arguments.rulesFile);
+        if (rule.output == null) rule.output = "\\0";
+
+        streamInput(rule);
     }
 
     private static Rule loadRules(final Path file) throws IOException {
