@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 public final class Rule implements Consumer<String> {
 
-    public String filter;
-    public String format;
+    public String input;
+    public String output;
     public Boolean printMatchFailure;
     public List<Rule> rules;
 
@@ -17,14 +17,14 @@ public final class Rule implements Consumer<String> {
     public void accept(final String line) {
         final var matcher = filterPattern().matcher(line);
         if (matcher.matches()) {
-            final var output = toOutput(format, matcher);
+            final var raw = toRawOutput(output, matcher);
             if (rules != null) for (final var rule : rules) {
-                if (rule.matches(output)) {
-                    rule.accept(output);
+                if (rule.matches(raw)) {
+                    rule.accept(raw);
                     break;
                 }
             }
-            else if (output != null) System.out.println(output);
+            else if (raw != null) System.out.println(raw);
         } else if (printMatchFailure != null && printMatchFailure)
             System.out.println(line);
     }
@@ -35,11 +35,11 @@ public final class Rule implements Consumer<String> {
 
     private Pattern filterPattern() {
         if (compiledPattern == null)
-            compiledPattern = Pattern.compile(filter == null ? ".+" : filter);
+            compiledPattern = Pattern.compile(input == null ? ".+" : input);
         return compiledPattern;
     }
 
-    private static String toOutput(final String format, final Matcher matcher) {
+    private static String toRawOutput(final String format, final Matcher matcher) {
         if (format == null) return null;
         String output = format.replace("\\0", matcher.group());
         for (int i = 0; i < matcher.groupCount(); i++)
