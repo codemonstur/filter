@@ -22,5 +22,5 @@ This tool is useful if you have a stream of log output, and you want to see only
 
 This command rearranges the time and 
 
-    cat src/data/stream_01.txt | java -jar target/logfilter.jar -c src/conf/reorder.yml
+    cat src/data/stream_01.txt | java -jar target/filter.jar -c src/conf/reorder.yml
 

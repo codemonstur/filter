@@ -1,4 +1,4 @@
-package logfilter;
+package filter;
 
 import jcli.annotations.CliCommand;
 import jcli.annotations.CliOption;
