@@ -1,4 +1,4 @@
-package logfilter;
+package filter;
 
 import java.util.List;
 import java.util.function.Consumer;

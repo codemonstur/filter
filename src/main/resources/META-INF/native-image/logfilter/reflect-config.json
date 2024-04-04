@@ -1,6 +1,6 @@
 [
   {
-    "name" : "logfilter.CliArguments",
+    "name" : "filter.CliArguments",
     "queryAllDeclaredConstructors" : true,
     "queryAllPublicConstructors" : true,
     "queryAllDeclaredMethods" : true,
@@ -11,7 +11,7 @@
     "allDeclaredFields" : true
   },
   {
-    "name" : "logfilter.Rule",
+    "name" : "filter.Rule",
     "queryAllDeclaredConstructors" : true,
     "queryAllPublicConstructors" : true,
     "queryAllDeclaredMethods" : true,
