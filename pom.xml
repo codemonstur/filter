@@ -19,7 +19,7 @@
         <version.plugin.surefire>3.2.5</version.plugin.surefire>
         <version.plugin.jacoco>0.8.11</version.plugin.jacoco>
         <version.plugin.licensescan>3.2.fork-1</version.plugin.licensescan>
-        <version.plugin.dependency-check>9.0.9</version.plugin.dependency-check>
+        <version.plugin.check-cves>1.1.0</version.plugin.check-cves>
 
         <version.library.jcli>1.5.1</version.library.jcli>
         <version.library.snakeyaml>2.2</version.library.snakeyaml>
@@ -178,6 +178,9 @@
     <profiles>
         <profile>
             <id>licenses</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
 
             <build>
                 <plugins>
@@ -207,23 +210,22 @@
 
         <profile>
             <id>vulnerabilities</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
 
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.owasp</groupId>
-                        <artifactId>dependency-check-maven</artifactId>
-                        <version>${version.plugin.dependency-check}</version>
-                        <configuration>
-                            <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
-                            <failBuildOnCVSS>0</failBuildOnCVSS>
-                        </configuration>
+                        <groupId>com.github.codemonstur</groupId>
+                        <artifactId>maven-check-cves</artifactId>
+                        <version>${version.plugin.check-cves}</version>
                         <executions>
-                            <execution>
-                                <phase>validate</phase>
-                                <goals><goal>check</goal></goals>
-                            </execution>
+                            <execution><goals><goal>check</goal></goals></execution>
                         </executions>
+                        <configuration>
+                            <includeTestDependencies>true</includeTestDependencies>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
