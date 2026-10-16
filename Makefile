@@ -1,6 +1,6 @@
 
 .EXPORT_ALL_VARIABLES:
-.PHONY: help clean docs build test native install tests run validate release-notes
+.PHONY: help clean docs build test native install tests run validate release-notes coverage
 
 NAME=`xmllint --xpath "/project/artifactId/text()" pom.xml`
 VERSION=`xmllint --xpath "//project/version/text()" pom.xml`
@@ -20,6 +20,7 @@ help:
 	@$(INFO) "  - docs		Generate project documentation and write to target/docs"
 	@$(INFO) "  - build	Compiles and packages the code into an executable jar"
 	@$(INFO) "  - test	Runs the tests"
+	@$(INFO) "  - coverage	Run tests and generate a jacoco coverage report"
 	@$(INFO) "  - native	Builds a native image using Graal"
 	@$(INFO) "  - install	Copies the native image to /usr/local/bin"
 	@$(INFO) "  - tests	Runs a mvn clean test"
@@ -46,6 +47,14 @@ build:
 
 test:
 	@mvn test
+
+# Runs the tests; the pom already binds jacoco prepare-agent and report
+coverage:
+	@$(INFO) "Running tests and generating coverage report"
+	@mvn test
+	@$(INFO) "Coverage report written to target/site/jacoco/index.html"
+	@output=$$(java src/build/CoverageSummary.java target/site/jacoco/jacoco.csv) || exit $$?; \
+	printf '%s\n' "$$output" | while IFS= read -r line; do $(INFO) "$$line"; done
 
 native: build
 	@native-image --no-fallback -jar target/filter.jar -o target/filter
