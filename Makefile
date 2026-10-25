@@ -14,8 +14,8 @@ INFO = printf '[\033[1;34mINFO\033[m] %s\n'
 endif
 
 help: ## Show this help
-	@grep -hE '^[a-zA-Z_-]+:.*## ' $(MAKEFILE_LIST) | \
-		awk 'BEGIN {FS = ":.*## "}; {printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
+	@grep -hE '^[a-zA-Z0-9_.-]+:' $(MAKEFILE_LIST) | grep -vE '^[a-zA-Z0-9_.-]+:=' | \
+		awk 'BEGIN {FS = ":"} /^\./ {next} {name = $$1; sub(/[[:blank:]]+$$/, "", name); doc = $$0; sub(/^[^#]*## /, "", doc); if (doc == $$0) sub(/^[^:]*:[[:blank:]]*/, "", doc); printf "  \033[36m%-10s\033[0m %s\n", name, doc}'
 
 clean: ## Delete everything in ./target
 	@$(INFO) "Cleaning"
@@ -55,11 +55,12 @@ run: build ## Build and run with the sample stream and reorder config
 	@$(INFO) "Running"
 	@cat src/data/stream.txt | java -jar target/filter.jar -c src/data/reorder.yml
 
-validate: ## Check dependency versions, cves, and licenses
+validate: ## Check dependency versions, cves, licenses, and code quality
 	@mvn versions:display-dependency-updates
 	@mvn versions:display-plugin-updates
 	@mvn validate -P vulnerabilities
 	@mvn validate -P licenses
+	@mvn validate -P codequality
 
 release-notes: ## Write release notes from the git log
 	@mkdir -p src/docs/releases

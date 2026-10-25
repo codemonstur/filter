@@ -20,7 +20,7 @@ This tool is useful if you have a stream of log output, and you want to see only
 
 ## Example
 
-This command rearranges the time and 
+This command moves the timestamp before the tag:
 
-    cat src/data/stream_01.txt | java -jar target/filter.jar -c src/conf/reorder.yml
+    cat src/data/stream.txt | java -jar target/filter.jar -c src/data/reorder.yml
 
