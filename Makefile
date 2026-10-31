@@ -30,10 +30,8 @@ docs: ## Generate project documentation and write to target/docs
 	@pandoc --pdf-engine=weasyprint -o target/docs/README.pdf README.md
 
 # Builds the code
-build: ## Compile and package the code, skipping tests
-	@$(INFO) "Building"
+build: ## Runs a mvn clean package
 	@mvn -DskipTests clean package
-
 test: ## Run the tests
 	@mvn test
 
@@ -68,7 +66,6 @@ validate: ## Check dependency versions, cves, licenses, and code quality
 	@mvn versions:display-plugin-updates
 	@mvn verify -P vulnerabilities,licenses -DskipTests -T 1C
 	@mvn validate -P codequality
-
 release-notes: ## Write release notes from the git log
 	@mkdir -p src/docs/releases
 	@$(INFO) "Writing release notes to src/docs/releases/release-$(VERSION).txt"
