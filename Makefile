@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := help
 .EXPORT_ALL_VARIABLES:
+
 .PHONY: help clean docs build test native install run validate release-notes coverage deploy mutation
 
 NAME=`xmllint --xpath "/project/artifactId/text()" pom.xml`
@@ -32,6 +33,7 @@ docs: ## Generate project documentation and write to target/docs
 # Builds the code
 build: ## Runs a mvn clean package
 	@mvn -DskipTests clean package
+
 test: ## Run the tests
 	@mvn test
 
@@ -58,7 +60,6 @@ mutation: ## Run mutation tests on the unit tests
 	@mvn -P mutation test
 	@$(INFO) "Mutation report written to target/pit-reports/index.html"
 
-
 validate: ## Check dependency versions, cves, licenses, and code quality
 	@mvn com.github.codemonstur:maven-check-pom:1.0.0:check validate
 	@mvn com.github.codemonstur:maven-check-pom:1.0.0:reorder
@@ -66,6 +67,7 @@ validate: ## Check dependency versions, cves, licenses, and code quality
 	@mvn versions:display-plugin-updates
 	@mvn verify -P vulnerabilities,licenses -DskipTests -T 1C
 	@mvn validate -P codequality
+
 release-notes: ## Write release notes from the git log
 	@mkdir -p src/docs/releases
 	@$(INFO) "Writing release notes to src/docs/releases/release-$(VERSION).txt"
