@@ -5,15 +5,35 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The {@code Rule} class.
+ */
 public final class Rule implements Consumer<String> {
 
+    /**
+     * The {@code input} field.
+     */
     public String input;
+    /**
+     * The {@code output} field.
+     */
     public String output;
+    /**
+     * The {@code printMatchFailure} field.
+     */
     public Boolean printMatchFailure;
+    /**
+     * The {@code rules} field.
+     */
     public List<Rule> rules;
 
     private transient Pattern compiledPattern;
 
+    /**
+     * Performs the {@code accept} operation.
+     *
+     * @param line the line
+     */
     public void accept(final String line) {
         final var matcher = filterPattern().matcher(line);
         if (matcher.matches()) {
@@ -47,4 +67,10 @@ public final class Rule implements Consumer<String> {
         return output;
     }
 
+
+    /**
+     * Creates a new instance.
+     */
+    public Rule() {
+    }
 }

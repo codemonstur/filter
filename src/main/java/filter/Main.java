@@ -11,8 +11,17 @@ import java.util.function.Consumer;
 import static java.nio.file.Files.newInputStream;
 import static jcli.CliParserBuilder.newCliParser;
 
+/**
+ * The {@code Main} enum.
+ */
 public enum Main {;
 
+    /**
+     * Runs the application.
+     *
+     * @param args the command-line arguments
+     * @throws IOException if the operation fails
+     */
     public static void main(final String... args) throws IOException {
         final var arguments = newCliParser(CliArguments::new)
                 .onHelpPrintHelpAndExit().onErrorPrintHelpAndExit().parseSuppressErrors(args);
